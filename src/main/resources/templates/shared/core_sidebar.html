@@ -1,0 +1,124 @@
+ <html xmlns:th="http://www.thymeleaf.org">
+	
+<!-- --------------------------------------- COMMON SIDEBAR used for CORE LAYOUT START --------------------------------------- -->
+	
+	<th:block th:fragment="core_sidebar">
+	  <!-- Main Sidebar Container -->
+	  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+		<!-- Brand Logo -->
+		<a href="" class="brand-link">
+		  <img th:src="@{/admin/dist/img/AdminLTELogo.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+		  <span class="brand-text font-weight-light"><h6>Kuwait National Guards</h6></span>
+		</a>
+
+		<!-- Sidebar -->
+		<div class="sidebar">
+		  <!-- Sidebar user panel (optional) -->
+		  <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+			<div class="image">
+			  <img th:src="@{/admin/dist/img/avatar5.png}" class="img-circle elevation-2" alt="User Image">
+			</div>
+			<div class="info">
+			  <a href="#" class="d-block">[[${#request.userPrincipal.principal.fullName}]]</a>
+			  
+			 <!--   <a href="#" class="d-block">[[${#request.userPrincipal.principal.roles}]]</a>
+			   
+			    <a href="#" class="d-block">[[${#request.userPrincipal.principal.civilId}]]</a> -->
+			</div>
+		  </div>
+
+		  <!-- SidebarSearch Form -->
+		 
+
+		  <!-- Sidebar Menu -->
+		  <nav class="mt-2">
+			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+			  <!-- Add icons to the links using the .nav-icon class
+				   with font-awesome or any other icon font library -->
+			  <li class="nav-item">
+				<a th:href="@{/maindb}" class="nav-link">
+				  <i class="nav-icon fas fa-user-cog"></i>
+				  <p>
+					Health Manpower
+				  </p>
+				</a>
+			 </li>
+			 <li class="nav-item">
+				<a th:href="@{/dailyStatistics}" class="nav-link">
+				  <i class="nav-icon fas fa-chart-bar"></i>
+				  <p>
+					Daily Statistics
+					<span class="right badge badge-danger"></span>
+				  </p>
+				</a>
+			 </li>
+			 <li class="nav-item">
+				<a th:href="@{/doctorDashboard}" class="nav-link">
+				  <i class="nav-icon fa fa-user-md"></i>
+				  <p>
+					Doctors Schedule
+								  </p>
+				</a>
+			 </li>
+			 
+			 <!--  <li class="nav-item">
+				<a th:href="@{/mrd}" class="nav-link">
+				  <i class="nav-icon fas fa-th"></i>
+				  <p>
+				   Pat History
+								  </p>
+				</a>
+			 </li> -->
+			 
+			 <!-- <span th:text="${#request.userPrincipal.authorities}"></span> -->
+			 
+			  <li class="nav-item" th:if="${#request.userPrincipal.authorities
+			  .contains(new org.springframework.security.core.authority.SimpleGrantedAuthority('ROLE_ADMIN')) 
+			  || #request.userPrincipal.authorities
+			  .contains(new org.springframework.security.core.authority.SimpleGrantedAuthority('ROLE_MANAGER')) }">
+				<a th:href="@{/mrdeid}" class="nav-link">
+				  <i class="nav-icon fa fa-address-card"></i>
+				  <p>
+				   Patient History
+								  </p>
+				</a>
+			 </li>
+			 
+			 <li class="nav-item">
+				<a th:href="@{/birtReport}" class="nav-link">
+				  <i class="nav-icon fa fa-user-md"></i>
+				  <p>
+					Reports
+								  </p>
+				</a>
+			 </li>
+			 
+			 
+			 
+			  <li class="nav-item">
+				<a th:href="@{/logout}" class="nav-link">
+				  <i class="nav-icon fas fa-sign-out-alt"></i>
+				  <p>
+					Log Out
+				   </p>
+				</a>
+			 </li>
+						 
+				  
+				</ul>
+			  </li>
+			  
+		  
+			  
+
+			</ul>
+		  </nav>
+		  <!-- /.sidebar-menu -->
+		</div>
+		<!-- /.sidebar -->
+	  </aside>
+	  
+	  </th:block>
+<!-- --------------------------------------- COMMON SIDEBAR used for CORE LAYOUT END --------------------------------------- -->
+
+</html> 

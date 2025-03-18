@@ -1,0 +1,677 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	
+	<script src="./admin/plugins/chart.js/chart.min_new.js"></script>
+	<script src="./admin/plugins/chart.js/chartjs-plugin-datalabels@2.0.0-rc"></script>
+<script th:fragment="customScript" type="text/javascript">
+/*--------------------------- fragment 2 PATIENT DEPT BRANCH CHART JS START --------------------------- */
+
+//---------------------Daily patient DepT Chart 
+//Get context with jQuery - using jQuery's .get() method.
+
+var hmpViewPatientVisitDeptLabels = $("#hmpViewPatientVisitDeptLabels").val().trim();
+hmpViewPatientVisitDeptLabels = hmpViewPatientVisitDeptLabels.replace("[","").replace("]","").split(",");
+var hmpViewPatientVisitDeptData = $("#hmpViewPatientVisitDeptData").val().trim();
+hmpViewPatientVisitDeptData = hmpViewPatientVisitDeptData.replace("[","").replace("]","").split(",");
+var PatientVisitDeptChartCanvas = $('#patientDepTChart').get(0).getContext('2d')
+var PatientVisitDeptChartData = {
+labels:  hmpViewPatientVisitDeptLabels 
+ //[
+//	  'HeadQuarters',
+//	  'Sheikh Salem Camp',
+//	  'Summod Camp',
+//     'Tahreer Camp-Dental',
+//     'Tahreer Camp'
+  
+//]
+ ,
+datasets: [
+  {
+    data: hmpViewPatientVisitDeptData ,// [5, 2, 2, 8, 3]
+   // backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#9ba8b7','#260326fc' ,'#00c0ef','#27a544','#000080','#4b77a9', '#d21243', '#ff5e07','#6610f2', '#1f2d3d','#7FFF00','#800000','#808000','#B27200'],
+    backgroundColor : ['#00c0ef','#27a544','#000080','#4b77a9', '#d21243', '#ff5e07','#5f255f','#9ba8b7','#2b78fd','#e11011', '#f10bf1', '#260326fc' ,'#6610f2', '#1f2d3d','#7FFF00','#800000','#808000','#B27200'],
+  }
+]
+
+}
+var PatientVisitDeptChartOptions = {
+legend: {
+  align:'end',
+  labels:{
+	  usePointStyle: true,
+	  padding: 20
+  }
+  
+},
+plugins:{
+	  
+		 datalabels:{
+		color:'white',
+		fontStyle:'bolder',
+		align:'left',
+		
+		
+		formatter:
+			function(value,ctx){
+			 return value>0?value:'';
+	      	},
+	      	
+	      	
+		
+	        }
+		
+},
+onClick: function(event,element){
+	if(element.length>0){
+		var url='./patientDetailsTodyInfoWithDept?DeptName='+PatientVisitDeptChartChart.data.labels[element[0].index].trim();
+		openWindow(url);
+	}
+	
+}
+
+}
+//Create pie or douhnut chart
+//You can switch between pie and douhnut using the method below.
+//eslint-disable-next-line no-unused-vars
+var PatientVisitDeptChartChart = new Chart(PatientVisitDeptChartCanvas, {
+type: 'doughnut',
+data: PatientVisitDeptChartData,
+options: PatientVisitDeptChartOptions,
+plugins:[ChartDataLabels]
+
+
+});
+
+	/*--------------------------- fragment 2 PATIENT DEPT BRANCH CHART JS END --------------------------- */
+
+/* --------------------------- fragment 3 LAB OFFICE BRANCH CHART JS start ---------------------------*/
+ var hmpLabTodayLabels = $("#hmpLabTodayLabels").val();
+       hmpLabTodayLabels = hmpLabTodayLabels.replace("[","").replace("]","").replaceAll("-MultiSpeciality","").split(",");
+       
+  var hmpLabTodayData = $("#hmpLabTodayData").val().trim();
+  hmpLabTodayData = hmpLabTodayData.replace("[","").replace("]","").split(",");
+  
+var labTestsChartCanvas = $('#labTestsChart').get(0).getContext('2d')
+var labTestsChartData = {
+	
+	labels: hmpLabTodayLabels
+		//[
+	//	   'HeadQuarters',
+		//   'Sheikh Salem Camp',
+	//	   'Summod Camp',
+	 //      'Tahreer Camp-Dental',
+	 //      'Tahreer Camp'    
+	//    ]
+	,
+	
+  datasets: [
+    {
+    	data:hmpLabTodayData ,// [30, 17, 15, 19, 20],
+        backgroundColor: ['#4b77a9', '#B27200', '#00c0ef','#5f255f','#d21243'],
+        label: 'Daily Doctors',
+        
+       
+       // data: [5, 2, 9, 8, 3],
+     // backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc']
+    }
+  ]
+ 
+}
+ var labTestsChartOptions = {
+  legend: {
+    display: false
+  },
+  plugins:{
+	  legend: {
+		    display: false
+		  },
+	  labels:{
+	
+		render:'value',
+		fontColor:'white',
+		fontStyle:'bolder',
+		
+		},
+		 datalabels:{
+	        	labels:{
+	        		value:{
+	        			color:'white'
+	        		}
+	        	}
+	        }
+		
+		
+},
+scales: {
+    yAxes: [{
+      ticks: {
+    	  beginAtZero:true
+      }
+     
+    }]
+  },
+  onClick: function(event,element){
+		if(element.length>0){
+			let str=parseInt(element[0].index);
+			let num=str+1;
+			var url='./labTestInfoWithOffice?OfficeName='+labTestsChartChart.data.labels[element[0].index].trim();
+			openWindow(url);
+		}
+		
+	}
+  
+}
+// Create pie or douhnut chart
+// You can switch between pie and douhnut using the method below.
+// eslint-disable-next-line no-unused-vars
+var labTestsChartChart = new Chart(labTestsChartCanvas, {
+  type: 'bar',
+  data: labTestsChartData,
+  options: labTestsChartOptions,
+  plugins:[ChartDataLabels]
+  
+ 
+});
+/*--------------------------- fragment 3 LAB OFFICE BRANCH CHART JS END --------------------------- */
+
+/*--------------------------- fragment 3 RADIOLOGY OFFICE BRANCH CHART JS START --------------------------- */
+//----------------------------------------------------
+    //- BAR CHART -
+    //-------------
+//-------------------------------------------------------------------------
+ var hmpLabRadTestTodayLabels = $("#hmpLabRadTestTodayLabels").val();
+       hmpLabRadTestTodayLabels = hmpLabRadTestTodayLabels.replace("[","").replace("]","").replaceAll("-MultiSpeciality","").split(",");
+       
+  var hmpLabRadTestTodayData = $("#hmpLabRadTestTodayData").val().trim();
+  hmpLabRadTestTodayData = hmpLabRadTestTodayData.replace("[","").replace("]","").split(",");
+  
+var dailyLabRadTestChartCanvas = $('#dailyLabRadTestChart').get(0).getContext('2d')
+var dailyLabRadTestChartData = {
+	
+	labels: hmpLabRadTestTodayLabels
+		//[
+	//	   'HeadQuarters',
+		//   'Sheikh Salem Camp',
+	//	   'Summod Camp',
+	 //      'Tahreer Camp-Dental',
+	 //      'Tahreer Camp'    
+	//    ]
+	,
+	
+  datasets: [
+    {
+    	data:hmpLabRadTestTodayData ,// [30, 17, 15, 19, 20],
+        backgroundColor: ['#4b77a9', '#B27200', '#00c0ef','#5f255f','#d21243'],
+        label: 'Daily Doctors',
+        
+       
+       // data: [5, 2, 9, 8, 3],
+     // backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc']
+    }
+  ]
+ 
+}
+ var dailyLabRadTestChartOptions = {
+  legend: {
+    display: false
+  },
+  plugins:{
+	  legend: {
+		    display: false
+		  },
+	  labels:{
+	
+		render:'value',
+		fontColor:'white',
+		fontStyle:'bolder',
+		
+		},
+		 datalabels:{
+	        	
+	        	
+	        	labels:{
+	        		value:{
+	        			color:'white'
+	        		}
+	        	}
+	        }
+		
+		
+},
+scales: {
+    yAxes: [{
+      ticks: {
+    	  beginAtZero:true
+      }
+     
+    }]
+  },
+  onClick: function(event,element){
+		if(element.length>0){
+			let str=parseInt(element[0].index);
+			let num=str+1;
+			var url='./radTestInfoWithOffice?OfficeName='+dailyLabRadTestChartChart.data.labels[element[0].index].trim();
+			openWindow(url);
+		}
+		
+	}
+  
+}
+// Create pie or douhnut chart
+// You can switch between pie and douhnut using the method below.
+// eslint-disable-next-line no-unused-vars
+var dailyLabRadTestChartChart = new Chart(dailyLabRadTestChartCanvas, {
+  type: 'bar',
+  data: dailyLabRadTestChartData,
+  options: dailyLabRadTestChartOptions,
+  plugins:[ChartDataLabels]
+  
+ 
+});
+	/*--------------------------- fragment 3 RADIOLOGY OFFICE BRANCH CHART JS END --------------------------- */
+
+
+	/*--------------------------- fragment 3 PATIENT OFFICE BRANCH CHART JS START --------------------------- */
+//-----------------dailyDoctors-----
+//Get context with jQuery - using jQuery's .get() method.
+
+var hmpViewPatientTodayLabels = $("#hmpViewPatientTodayLabels").val();
+   hmpViewPatientTodayLabels = hmpViewPatientTodayLabels.replace("[","").replace("]","").replaceAll("-MultiSpeciality","").split(",");
+var hmpViewPatientTodayData = $("#hmpViewPatientTodayData").val().trim();
+hmpViewPatientTodayData = hmpViewPatientTodayData.replace("[","").replace("]","").split(",");
+
+var dailyViewPatientChartCanvas = $('#dailyViewPatientChart').get(0).getContext('2d')
+var dailyViewPatientChartData = {
+	
+	labels:hmpViewPatientTodayLabels,
+	//labels:  [
+	//	   'HeadQuarters',
+	//	   'Sheikh Salem Camp',
+	//	   'Summod Camp',
+	//       'Tahreer Camp-Dental',
+	//       'Tahreer Camp'    
+	//    ],
+	
+datasets: [
+  {
+      data:hmpViewPatientTodayData ,// [30, 17, 15, 19, 20],
+      backgroundColor: ['#4b77a9', '#B27200', '#00c0ef','#5f255f','#d21243'],
+      label: 'Daily Doctors',
+      
+     
+     // data: [5, 2, 9, 8, 3],
+   // backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc']
+  }
+]
+
+}
+var dailyViewPatientChartOptions = {
+legend: {
+  display: false
+},
+plugins:{
+	  legend: {
+		    display: false
+		  },
+	  labels:{
+	
+		render:'value',
+		fontColor:'white',
+		fontStyle:'bolder',
+		
+		},
+		 datalabels:{
+	        	
+	        	
+	        	labels:{
+	        		value:{
+	        			color:'white'
+	        		}
+	        	}
+	        }
+		
+		
+},
+scales: {
+  yAxes: [{
+    ticks: {
+  	  beginAtZero:true
+    }
+   
+  }]
+},
+ onClick: function(event,element){
+	if(element.length>0){
+		let str=parseInt(element[0].index);
+		let num=str+1;
+		var url='./patientDetailsTodyInfoWithOffice?OfficeName='+dailyViewPatientChartChart.data.labels[element[0].index].trim();
+		openWindow(url);
+	}
+	
+}
+
+
+}
+//Create pie or douhnut chart
+//You can switch between pie and douhnut using the method below.
+//eslint-disable-next-line no-unused-vars
+var dailyViewPatientChartChart = new Chart(dailyViewPatientChartCanvas, {
+type: 'bar',
+data: dailyViewPatientChartData,
+options: dailyViewPatientChartOptions,
+plugins:[ChartDataLabels]
+
+
+});
+  /*--------------------------- fragment 3 PATIENT OFFICE BRANCH CHART JS END --------------------------- */
+ /*--------------------------- fragment 4 DOCTOR BRANCH CHART JS START --------------------------- */
+
+//-----------------dailyDoctors-----
+//Get context with jQuery - using jQuery's .get() method.
+
+ var hmpDoctorBranchesTodayLabels = $("#hmpDoctorBranchesTodayLabels").val();
+     hmpDoctorBranchesTodayLabels = hmpDoctorBranchesTodayLabels.replace("[","").replace("]","").replaceAll("-MultiSpeciality","").split(",");
+  var hmpDoctorBranchesTodayData = $("#hmpDoctorBranchesTodayData").val().trim();
+  hmpDoctorBranchesTodayData = hmpDoctorBranchesTodayData.replace("[","").replace("]","").split(",");
+  
+var dailyDoctorsChartCanvas = $('#dailyDoctorsChart').get(0).getContext('2d')
+var dailyDoctorsChartData = {
+	
+	labels: hmpDoctorBranchesTodayLabels
+	// [
+	//	   'HeadQuarters',
+	//	   'Sheikh Salem Camp',
+	//	   'Summod Camp',
+	//       'Tahreer Camp-Dental',
+	 //      'Tahreer Camp'    
+	//    ]
+	    ,
+	
+  datasets: [
+    {
+        data:hmpDoctorBranchesTodayData ,// [30, 17, 15, 19, 20],
+        backgroundColor: ['#4b77a9', '#B27200', '#00c0ef','#5f255f','#d21243'],
+        label: 'Daily Doctors',
+        
+       
+       // data: [5, 2, 9, 8, 3],
+     // backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc']
+    }
+  ]
+ 
+}
+ var dailyDoctorsChartOptions = {
+  legend: {
+    display: false
+  },
+  plugins:{
+	  legend: {
+		    display: false
+		  },
+	  labels:{
+	
+		render:'value',
+		fontColor:'white',
+		fontStyle:'bolder',
+		
+		},
+		 datalabels:{
+	        	
+	        	
+	        	labels:{
+	        		value:{
+	        			color:'white'
+	        		}
+	        	}
+	        }
+		
+		
+},
+scales: {
+    yAxes: [{
+      ticks: {
+    	  beginAtZero:true
+      }
+     
+    }]
+  },
+  onClick: function(event,element){
+		if(element.length>0){
+			var url='./doctorDetailsTodyInfoWithOffice?OfficeName='+dailyDoctorsChartChart.data.labels[element[0].index].trim();
+			openWindow(url);
+		}
+		
+	}
+ 
+}
+// Create pie or douhnut chart
+// You can switch between pie and douhnut using the method below.
+// eslint-disable-next-line no-unused-vars
+var dailyDoctorsChartChart = new Chart(dailyDoctorsChartCanvas, {
+  type: 'bar',
+  data: dailyDoctorsChartData,
+  options: dailyDoctorsChartOptions,
+  plugins:[ChartDataLabels]
+  
+ 
+});
+/*--------------------------- fragment 4 DOCTOR BRANCH CHART JS END --------------------------- */
+
+
+/*--------------------------- fragment 4 SICKLEAVE OFFICE BRANCH CHART JS START --------------------------- */
+//---------------------Daily sickLeaves 
+//Get context with jQuery - using jQuery's .get() method.
+var hmpSickLeaveTodayLabels = $("#hmpSickLeaveTodayLabels").val().trim();
+hmpSickLeaveTodayLabels = hmpSickLeaveTodayLabels.replace("[","").replace("]","").replaceAll("-MultiSpeciality","").split(",");
+var hmpSickLeaveTodayData = $("#hmpSickLeaveTodayData").val().trim();
+hmpSickLeaveTodayData = hmpSickLeaveTodayData.replace("[","").replace("]","").split(",");
+var sickLeavesChartCanvas = $('#sickLeavesChart').get(0).getContext('2d')
+var sickLeavesChartData = {
+  labels:  hmpSickLeaveTodayLabels 
+   //[
+//	  'HeadQuarters',
+//	  'Sheikh Salem Camp',
+//	  'Summod Camp',
+ //     'Tahreer Camp-Dental',
+ //     'Tahreer Camp'
+    
+//  ]
+   ,
+  datasets: [
+    {
+      data: hmpSickLeaveTodayData ,// [5, 2, 2, 8, 3]
+      backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc']
+    }
+  ]
+ 
+}
+ var sickLeavesChartOptions = {
+  legend: {
+    display: true
+  },
+  plugins:{
+	  labels:{
+	
+		render:'value',
+		fontColor:'white',
+		fontStyle:'bolder'
+		},
+		 datalabels:{
+		color:'white',
+		fontStyle:'bolder',
+		formatter:function(value,ctx){
+			 return value>0?value:'';
+	      	}
+		
+	        }
+		
+},
+ onClick: function(event,element){
+	if(element.length>0){
+		var url='./sickLeaveInfoWithOffice?OfficeName='+sickLeavesChartChart.data.labels[element[0].index].trim();
+		openWindow(url);
+	}
+	
+}
+ 
+}
+// Create pie or douhnut chart
+// You can switch between pie and douhnut using the method below.
+// eslint-disable-next-line no-unused-vars
+var sickLeavesChartChart = new Chart(sickLeavesChartCanvas, {
+  type: 'pie',
+  data: sickLeavesChartData,
+  options: sickLeavesChartOptions,
+  plugins:[ChartDataLabels]
+  
+ 
+});
+/*--------------------------- fragment 4 SICKLEAVE OFFICE BRANCH CHART JS END --------------------------- */
+
+/*--------------------------- fragment 4 PROCEDURE OFFICE BRANCH CHART JS START --------------------------- */
+
+//---------------------Daily "hmpProcedu Office Today " 
+//Get context with jQuery - using jQuery's .get() method.
+
+
+var hmpProceduOfficeTodayLabels = $("#hmpProceduOfficeTodayLabels").val();
+hmpProceduOfficeTodayLabels = hmpProceduOfficeTodayLabels.replace("[","").replace("]","").replaceAll("-MultiSpeciality","").replaceAll("Al Ali","").split(",");
+var hmpProceduOfficeTodayData = $("#hmpProceduOfficeTodayData").val().trim();
+hmpProceduOfficeTodayData = hmpProceduOfficeTodayData.replace("[","").replace("]","").split(",");
+var ProceduOfficeChartCanvas = $('#proceduOfficeChart').get(0).getContext('2d')
+var ProceduOfficeChartData = {
+labels:  hmpProceduOfficeTodayLabels 
+ //[
+//	  'HeadQuarters',
+//	  'Sheikh Salem Camp',
+//	  'Summod Camp',
+//     'Tahreer Camp-Dental',
+//     'Tahreer Camp'
+  
+//]
+ ,
+datasets: [
+  {
+    data: hmpProceduOfficeTodayData ,// [5, 2, 2, 8, 3]
+    backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#2b78fd']
+  }
+]
+
+}
+var ProceduOfficeChartOptions = {
+legend: {
+  display: true
+},
+plugins:{
+	  labels:{
+	
+		render:'value',
+		fontColor:'white',
+		fontStyle:'bolder'
+		},
+		 datalabels:{
+		color:'white',
+		fontStyle:'bolder',
+		formatter:function(value,ctx){
+			 return value > 0?value:'';
+	      	}
+		
+	        }
+		
+},
+ onClick: function(event,element){
+	if(element.length>0){
+		var url='./procInfooWithOffice?OfficeName='+ProceduOfficeChartChart.data.labels[element[0].index].trim();
+		openWindow(url);
+	}
+	
+}
+
+
+}
+//Create pie or douhnut chart
+//You can switch between pie and douhnut using the method below.
+//eslint-disable-next-line no-unused-vars
+var ProceduOfficeChartChart = new Chart(ProceduOfficeChartCanvas, {
+type: 'doughnut',
+data: ProceduOfficeChartData,
+options: ProceduOfficeChartOptions,
+plugins:[ChartDataLabels]
+
+
+});
+
+/*--------------------------- fragment 4 PROCEDURE OFFICE BRANCH CHART JS END --------------------------- */
+
+/*--------------------------- fragment 5 DISPENSE OFFICE BRANCH CHART JS START --------------------------- */
+//---------------------Daily sickLeaves 
+//Get context with jQuery - using jQuery's .get() method.
+var hmpDispenseOfficeTodayLabels = $("#hmpDispenseOfficeTodayLabels").val().trim();
+hmpDispenseOfficeTodayLabels = hmpDispenseOfficeTodayLabels.replace("[","").replace("]","").replaceAll("-MultiSpeciality","").split(",");
+var hmpDispenseOfficeTodayData = $("#hmpDispenseOfficeTodayData").val().trim();
+hmpDispenseOfficeTodayData = hmpDispenseOfficeTodayData.replace("[","").replace("]","").split(",");
+var dispenseChartCanvas = $('#dispenseChart').get(0).getContext('2d')
+var dispenseChartData = {
+  labels:  hmpDispenseOfficeTodayLabels 
+   //[
+//	  'HeadQuarters',
+//	  'Sheikh Salem Camp',
+//	  'Summod Camp',
+ //     'Tahreer Camp-Dental',
+ //     'Tahreer Camp'
+    
+//  ]
+   ,
+  datasets: [
+    {
+      data: hmpDispenseOfficeTodayData ,// [5, 2, 2, 8, 3]
+      backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc']
+    }
+  ]
+ 
+}
+ var dispenseChartOptions = {
+  legend: {
+    display: true
+  },
+  plugins:{
+	  labels:{
+	
+		render:'value',
+		fontColor:'white',
+		fontStyle:'bolder'
+		},
+		 datalabels:{
+		color:'white',
+		fontStyle:'bolder',
+		formatter:function(value,ctx){
+			 return value>0?value:'';
+	      	}
+		
+	        }
+		
+},
+ onClick: function(event,element){
+	if(element.length>0){
+		var url='./dispenseInfoWithOffice?OfficeName='+dispenseChartChart.data.labels[element[0].index].trim();
+		openWindow(url);
+	}
+	
+}
+ 
+}
+// Create pie or douhnut chart
+// You can switch between pie and douhnut using the method below.
+// eslint-disable-next-line no-unused-vars
+var dispenseChartChart = new Chart(dispenseChartCanvas, {
+  type: 'pie',
+  data: dispenseChartData,
+  options: dispenseChartOptions,
+  plugins:[ChartDataLabels]
+  
+ 
+});
+/*--------------------------- fragment 5 DISPENSE OFFICE BRANCH CHART JS END --------------------------- */
+
+
+</script>
+</html>
