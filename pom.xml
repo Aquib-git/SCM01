@@ -42,7 +42,7 @@
 <dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
+			<scope>test12333</scope>
 	</dependency>
 
 <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
